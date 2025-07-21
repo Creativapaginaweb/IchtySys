@@ -275,16 +275,9 @@
     <div class="centrar-grafico">
     <canvas id="grafica-tipos-talla" style="max-width:340px;"></canvas>
     <canvas id="grafica-barras-talla" style="margin-top:16px;max-width:340px;"></canvas></div>
-    
-    <div id="exportacion-acciones" style="display:flex;gap:10px;justify-content:center;margin:13px 0;">
-  <button id="btnGuardarExcel" class="blackbotton accion-peq">Guardar en Excel</button>
-  <button id="btnEnviarWhatsApp" class="blackbotton accion-peq">Enviar por WhatsApp</button>
-</div>
-    
     <div id="analisis-leyenda" style="margin-top:16px;font-size:13.5px;color:#222;"></div>
   </div>
 </div>
-
 
 <button type="button" id="btn-analisis-graficas" style="margin: 10px auto 18px auto; padding: 6px 18px; border-radius: 7px; border: none; background: #3a6fd6; color: #fff; font-weight: 700; cursor: pointer; width: 200px;">Ver resumen y gráficas</button>
 
@@ -1203,125 +1196,7 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
   document.getElementById('analisis-leyenda').innerHTML = textoResumen;
 }
 
-
-
-
-// Asignar handlers con manejo de errores mejorado para móviles
-var btnExcel = document.getElementById('btnGuardarExcel');
-if(btnExcel) {
-  btnExcel.onclick = function() {
-    try {
-      let muestreos = getMuestreosGuardados();
-      let registroActual = obtenerRegistroActual();
-      muestreos.push(registroActual);
-      setMuestreosGuardados(muestreos);
-      
-      if (typeof XLSX === "undefined") {
-        console.error("La librería SheetJS no está cargada");
-        alert("Error: No se pudo cargar la librería Excel necesaria");
-        return;
-      }
-      
-      // Crear el libro y la hoja
-      const ws = XLSX.utils.json_to_sheet(muestreos);
-const wb = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb, ws, "Muestreos");
-const wbout = XLSX.write(wb, {type:'array', bookType:'xlsx'});
-const blob = new Blob([wbout], {type: "application/octet-stream"});
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = "muestreos_sardina.xlsx";
-document.body.appendChild(a);
-a.click();
-setTimeout(() => {
-  URL.revokeObjectURL(url);
-  document.body.removeChild(a);
-}, 0);
-alert("¡Archivo generado! Revisa tus descargas o carpeta de archivos.");
-
-      } catch (fileError) {
-        console.error("Error al guardar archivo:", fileError);
-        
-        // Alternativa: generar un enlace para descargar
-        const binaryStr = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
-        const blob = new Blob([new Uint8Array([...binaryStr].map(char => char.charCodeAt(0)))], 
-                              {type:'application/octet-stream'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = "muestreos_sardina.xlsx";
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }, 0);
-        alert("Excel generado mediante descarga alternativa. Verifica tus descargas.");
-      }
-    } catch (e) {
-      console.error("Error completo:", e);
-      alert("Error al crear Excel: " + e.message);
-    }
-  };
-}
-
-var btnWA = document.getElementById('btnEnviarWhatsApp');
-if(btnWA) {
-  btnWA.onclick = function() {
-    try {
-      const r = obtenerRegistroActual();
-      // Texto simplificado para evitar problemas en WhatsApp
-      let txt = "Muestreo Sardina\n";
-      txt += `Puerto: ${r["Puerto"]} | Fecha: ${r["Fecha"]}\n`;
-      txt += `Tallas: ≤15cm: ${r["≤15cm"]} | 16cm: ${r["16cm"]} | 17cm: ${r["17cm"]} | 18cm: ${r["18cm"]} | ≥19cm: ${r["≥19cm"]}\n`;
-      txt += `Total: ${r["Total especímenes"]}`;
-      
-      // Método directo para Android
-      if (/Android/i.test(navigator.userAgent)) {
-        window.location.href = "whatsapp://send?text=" + encodeURIComponent(txt);
-      } else {
-        window.open(`https://wa.me/?text=${encodeURIComponent(txt)}`, '_blank');
-      }
-    } catch (e) {
-      alert("Error al enviar por WhatsApp: " + e.message);
-    }
-  };
-}
-
-// Estas funciones utilitarias van FUERA de la función mostrarAnalisisModal
-function obtenerRegistroActual() {
-  return {
-    "Puerto": document.getElementById('puerto')?.value || '',
-    "Fecha": document.getElementById('fecha-sardina')?.textContent || '',
-    "Dueño / Embarcación": document.getElementById('duenoEmbarcacion')?.value || '',
-    "Responsables": document.getElementById('responsableMuestreo')?.value || '',
-    "Observaciones": document.getElementById('observaciones')?.value || '',
-    "≤15cm": document.getElementById('totalRango12-12.5-13-13.5-14-14.5-15-15.5')?.textContent || '0',
-    "16cm": document.getElementById('totalRango16-16.5')?.textContent || '0',
-    "17cm": document.getElementById('totalRango17-17.5')?.textContent || '0',
-    "18cm": document.getElementById('totalRango18-18.5')?.textContent || '0',
-    "≥19cm": document.getElementById('totalRango19-19.5-20-20.5-21-21.5-22-22.5-23')?.textContent || '0',
-    "Total especímenes": document.getElementById('totalClick')?.textContent || '0'
-  };
-}
-
-function getMuestreosGuardados() {
-  try {
-    return JSON.parse(localStorage.getItem('muestreosSardina')) || [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function setMuestreosGuardados(muestreos) {
-  localStorage.setItem('muestreosSardina', JSON.stringify(muestreos));
-}
-
 </script>
-
-<script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
-
 
 </body>
 </html>
