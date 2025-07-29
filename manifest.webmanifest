@@ -1,0 +1,21 @@
+{
+  "name": "IchtySys",
+  "short_name": "IchtySys",
+  "description": "Plataforma de Ictiometría",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007ACC",
+  "icons": [
+    {
+      "src": "IchtySys.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "IchtySys.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
