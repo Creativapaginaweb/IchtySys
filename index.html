@@ -499,8 +499,8 @@ const estadosPuertos = {
     "Nueva Esparta": ["Bella Vista", "Guayacán-Manzanillo", "Isla de Coche", "La Galera", "Manzanillo", "Pampatar", "Valdez"]
 };
 const claveGeneral = "20124815";
-const clavesPuerto = { "El Morro": "mps115e" };
-Object.values(estadosPuertos).flat().forEach(p => { if (!clavesPuerto[p]) clavesPuerto[p]=p; });
+const clavesPuerto = { "El Morro": "mps115e", "Araya": "MsA2026!", "Cumaná": "MsC2026!", "Guaca": "MsG2026!", "Guayacán": "MsY2026!", "La Esmeralda": "MsE2026!", "Bella Vista": "MsB2026!", "Guayacán-Manzanillo": "MsM2026!", "Isla de Coche": "MsI2026!", "La Galera": "MsL2026!", "Manzanillo": "MsZ2026!", "Pampatar": "MsP2026!", "Valdez": "MsV2026!" };
+//Object.values(estadosPuertos).flat().forEach(p => { if (!clavesPuerto[p]) clavesPuerto[p]=p; });
 
 let puertoSeleccionado = "";
 let puertoAutenticado = false;
