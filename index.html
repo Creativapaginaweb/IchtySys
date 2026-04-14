@@ -491,15 +491,24 @@ const PUERTO_OPCIONES = {
         responsables: [
             "Glenil Cordova", "Josselin Alfonzo", "Junaizy Maestre", "Luis Vásquez", "Marcos Marval", "Robert Rios", "Rosmeidys Fernández", "Yean Carlos Marín"
         ]
+    },
+    "Centro de Balanza ⚖️": {
+        duenosEmbarcaciones: [
+            "Esteban Herrera - Sol y Sal", "Irene Marval - Fénix"
+        ],
+        responsables: [
+            "Arelys Porras"
+        ]
     }
 };
 
 const estadosPuertos = {
     "Sucre": ["Araya", "Cumaná", "El Morro", "Guaca", "Guayacán", "La Esmeralda"],
-    "Nueva Esparta": ["Bella Vista", "Guayacán-Manzanillo", "Isla de Coche", "La Galera", "Manzanillo", "Pampatar", "Valdez"]
+    "Nueva Esparta": ["Bella Vista", "Guayacán-Manzanillo", "Isla de Coche", "La Galera", "Manzanillo", "Pampatar", "Valdez"],
+    "C.B.": ["Centro de Balanza ⚖️"]
 };
 const claveGeneral = "20124815";
-const clavesPuerto = { "El Morro": "Sardina321.", "Araya": "MsA2026!", "Cumaná": "MsC2026!", "Guaca": "MsG2026!", "Guayacán": "MsY2026!", "La Esmeralda": "MsE2026!", "Bella Vista": "MsB2026!", "Guayacán-Manzanillo": "MsM2026!", "Isla de Coche": "MsI2026!", "La Galera": "MsL2026!", "Manzanillo": "MsZ2026!", "Pampatar": "MsP2026!", "Valdez": "MsV2026!" };
+const clavesPuerto = { "El Morro": "Sardina321.", "Araya": "MsA2026!", "Cumaná": "MsC2026!", "Guaca": "MsG2026!", "Guayacán": "MsY2026!", "La Esmeralda": "MsE2026!", "Bella Vista": "MsB2026!", "Guayacán-Manzanillo": "MsM2026!", "Isla de Coche": "MsI2026!", "La Galera": "MsL2026!", "Manzanillo": "MsZ2026!", "Pampatar": "MsP2026!", "Valdez": "MsV2026!", "Centro de Balanza ⚖️": "Jefa1." };
 //Object.values(estadosPuertos).flat().forEach(p => { if (!clavesPuerto[p]) clavesPuerto[p]=p; });
 
 let puertoSeleccionado = "";
