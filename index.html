@@ -33,7 +33,7 @@
         .tallas-grid .btn, .tallas-grid .blackbotton { width: 100%; min-width: unset; max-width: unset; margin: 0; box-sizing: border-box;}
         .accion-peq { font-size: 15px !important; font-weight: 700; height: 25px; padding: 2px 0;}
         section > div:not(.tallas-grid) { margin-top: 2px; margin-bottom: 2px;}
-        fieldset:last-of-type { margin-top: 7px;}
+        fieldset:last-of-type { margin-top: 7px; position: relative;}
         label { color: #444;}
         .percentageRange1 { color: red;}
         .percentageRange2 { color: blue;}
@@ -63,15 +63,16 @@
         .puerto-bloque { margin-left: -90px; display: inline-block;}
         .puertos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; margin-bottom: 14px; max-width: 310px;}
         .puertos-grid label { display: flex; align-items: center; padding: 3px 0 3px 0; font-size: 13px; white-space: nowrap;}
-        .modal-acceso { display: none; position: fixed; z-index: 30000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(40,50,70,0.8); align-items: center; justify-content: center;}
-        .modal-acceso-dialogo { background: #fff; border-radius: 15px; box-shadow: 0 10px 32px #3335; width: 97%; max-width: 368px; padding: 28px 22px 20px 22px; position: relative; display: flex; flex-direction: column; align-items: stretch; animation: fadeInUp .25s;}
-        .modal-acceso-dialogo h2 { margin-top: 0; font-size: 1.14em; font-weight: 900; text-align: center;}
+        .modal-acceso { display: none; position: fixed; z-index: 30000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(10,15,30,0.85); align-items: center; justify-content: center;}
+        .modal-acceso-dialogo { background: rgba(255,255,255,0.08); border-radius: 15px; box-shadow: 0 10px 32px #3335, inset 0 0 0 1px rgba(255,255,255,0.1); width: 97%; max-width: 368px; padding: 28px 22px 20px 22px; position: relative; display: flex; flex-direction: column; align-items: stretch; animation: fadeInUp .25s; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15);}
+        .modal-acceso-dialogo h2 { margin-top: 0; font-size: 1.14em; font-weight: 900; text-align: center; color: #fff; text-shadow: 0 2px 10px rgba(0,200,255,0.3);}
         .modal-acceso-cerrar { position: absolute; right: 9px; top: 5px; background: none; border: none; font-size: 1.5em; color: #b22; cursor: pointer;}
         .modal-acceso-form { display: flex; flex-direction: column; gap: 11px; align-items: stretch;margin-top:12px;}
-        .modal-acceso-form label { font-size: 1em;margin-bottom: 2px;}
-        .modal-acceso-form input[type=password], .modal-acceso-form input[type=text] { font-size: 1em; padding: 7px 8px; border-radius: 7px; border: 1px solid #bbb; margin-bottom: 2px;}
-        .modal-acceso-btn { background: linear-gradient(90deg, #e25c48 0, #f19479 100%); color: #fff; border-radius: 8px; border: none; font-weight: 700; font-size: 1.04em; padding: 8px 0; margin-top: 13px; letter-spacing: 0.7px; cursor: pointer; transition: .12s;}
-        .modal-acceso-btn:active, .modal-acceso-btn:hover { background: #fa4545; color: #fff;}
+        .modal-acceso-form label { font-size: 1em;margin-bottom: 2px; color: #e0e8ff; cursor: pointer;}
+        .modal-acceso-form input[type=password], .modal-acceso-form input[type=text] { font-size: 1em; padding: 7px 8px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 2px; background: rgba(0,0,0,0.3); color: #fff;}
+        .modal-acceso-form input[type=password]::placeholder, .modal-acceso-form input[type=text]::placeholder { color: #8899aa;}
+        .modal-acceso-btn { background: linear-gradient(90deg, #00c6ff 0, #0072ff 100%); color: #fff; border-radius: 8px; border: none; font-weight: 700; font-size: 1.04em; padding: 8px 0; margin-top: 13px; letter-spacing: 0.7px; cursor: pointer; transition: .12s; box-shadow: 0 4px 15px rgba(0,114,255,0.4);}
+        .modal-acceso-btn:active, .modal-acceso-btn:hover { background: linear-gradient(90deg, #00b4e6 0, #0066cc 100%); box-shadow: 0 6px 20px rgba(0,114,255,0.6);}
         #puerto { text-align: center; background: #fff !important; border-radius: 12px !important; border: 1.5px solid #520000; transition: background 0.18s, color 0.18s; color: #333; font-weight: bold;}
         #puerto.puerto-completo { background: radial-gradient(ellipse at center, #fff 0%, #181818 90%); color: #fff;}
         #modalSeleccionRango { display:none; position:fixed; z-index:10000; top:0; left:0; width:100vw; height:100vh; background:rgba(40,50,70,0.18); align-items: center; justify-content: center;}
@@ -94,9 +95,11 @@
   margin-bottom: 12px;
 }
 
-/* Estilos para la introducción (degradado invertido) */
+/* Estilos para la introducción (fondo dinámico animado) */
         #introduccion {
-            background: radial-gradient(ellipse at center, #007bff, #111); /* Azul eléctrico en el centro, azul oscuro en los bordes */
+            background: linear-gradient(-45deg, #0a0e27, #1a237e, #0d47a1, #006064, #1a237e, #0a0e27);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             color: white;
             text-align: center;
             padding: 50px 0;
@@ -110,28 +113,90 @@
             width: 100%;
             height: 100%;
             z-index: 1000;
+            overflow: hidden;
+        }
+        
+        /* Efecto de partículas/flotantes */
+        #introduccion::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(0,200,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(100,0,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0,255,200,0.1) 0%, transparent 40%);
+            animation: floatParticles 20s ease-in-out infinite;
+        }
+        
+        /* Líneas de red holográfica */
+        #introduccion::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 10s linear infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes floatParticles {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            33% { transform: translate(30px, -30px) scale(1.1); opacity: 0.8; }
+            66% { transform: translate(-20px, 20px) scale(0.9); opacity: 0.6; }
+        }
+        
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
         }
 
         #introduccion h1 {
             font-size: 3em;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px #000000;
+            text-shadow: 0 0 20px rgba(0,200,255,0.5), 0 0 40px rgba(0,100,255,0.3);
+            position: relative;
+            z-index: 2;
         }
 
         #introduccion p {
             font-size: 1.2em;
             margin-bottom: 30px;
-            text-shadow: 1px 1px 2px #000000;
+            text-shadow: 0 0 10px rgba(0,200,255,0.3);
+            position: relative;
+            z-index: 2;
+            color: #a0c8ff;
         }
 
         #introduccion button {
-            padding: 10px 20px;
+            padding: 12px 32px;
             font-size: 1.2em;
-            background-color: #007bff;
+            background: linear-gradient(90deg, #00c6ff 0, #0072ff 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,114,255,0.4);
+            transition: all 0.3s ease;
+        }
+        
+        #introduccion button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0,114,255,0.6);
         }
 
         /* Estilos para el modal de acceso (centrar correctamente) */
@@ -143,15 +208,15 @@
             top: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(40, 50, 70, 0.8);
+            background: rgba(10,15,30,0.85);
             align-items: center;
             justify-content: center;
         }
 
         .modal-acceso-dialogo {
-            background: #fff;
+            background: rgba(255,255,255,0.08);
             border-radius: 15px;
-            box-shadow: 0 10px 32px #3335;
+            box-shadow: 0 10px 32px #3335, inset 0 0 0 1px rgba(255,255,255,0.1);
             width: 97%;
             max-width: 368px;
             padding: 28px 22px 20px 22px;
@@ -160,7 +225,90 @@
             flex-direction: column;
             align-items: stretch;
             animation: fadeInUp .25s;
-            margin: auto; /* Centrado */
+            margin: auto;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        /* Efecto holograma para el título del modal */
+        .holograma-titulo {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holograma-titulo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0,200,255,0.1) 50%,
+                transparent 70%
+            );
+            animation: hologramaScan 3s ease-in-out infinite;
+        }
+        
+        @keyframes hologramaScan {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Input de contraseña con icono de visibilidad */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .password-wrapper input {
+            width: 100%;
+            padding-right: 40px !important;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #8899aa;
+            font-size: 1.1em;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .toggle-password:hover {
+            color: #00c6ff;
+        }
+        
+        /* Mensaje de error sin alert nativo */
+        .error-msg {
+            color: #ff6b6b;
+            font-size: 0.85em;
+            text-align: center;
+            margin-top: 4px;
+            min-height: 1.2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .error-msg.visible {
+            opacity: 1;
         }
         
         /* Estilo para título IchtySys en el modal de análisis */
@@ -168,7 +316,7 @@
             font-size: 2.2em;
             font-weight: 900;
             text-align: center;
-            margin: 0 0 8px 0;
+            margin: 0 0 2px 0;
             background: linear-gradient(135deg, #1976d2 0%, #00bcd4 50%, #4caf50 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -182,10 +330,110 @@
             font-size: 0.85em;
             margin-bottom: 12px;
             font-weight: 600;
+            margin-top: 0;
+            line-height: 1.2;
+        }
+        
+        /* Sombreado para el modal de análisis */
+        #modal-analisis > div {
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1) !important;
+        }
+        
+        /* Botón deshacer integrado en fieldset de porcentaje */
+        .btn-deshacer {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.2s ease;
+            z-index: 10;
+        }
+        
+        .btn-deshacer.visible {
+            opacity: 1;
+        }
+        
+        .btn-deshacer:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .btn-deshacer:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+        
+        /* Fondo dinámico sutil para la app */
+        .bg-dinamico {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 25%, #e0f7fa 50%, #b2ebf2 75%, #e8eaf6 100%);
+            background-size: 400% 400%;
+            animation: bgSuave 20s ease infinite;
+        }
+        
+        @keyframes bgSuave {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Opcional: efecto de ondas muy sutiles */
+        .bg-dinamico::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(100,181,246,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(77,208,225,0.08) 0%, transparent 50%);
+            animation: bgOndas 15s ease-in-out infinite;
+        }
+        
+        @keyframes bgOndas {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(2deg); }
+        }
+        
+        /* Mejoras para selección de estado y puerto */
+        .estado-label, .puerto-label {
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+        
+        .estado-label:hover, .puerto-label:hover {
+            background: rgba(0,198,255,0.15);
+            border-color: rgba(0,198,255,0.3);
+        }
+        
+        .estado-label input[type="radio"], .puerto-label input[type="radio"] {
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+<!-- Fondo dinámico sutil -->
+<div class="bg-dinamico"></div>
+
 <!-- Sección de introducción -->
     <div id="introduccion">
         <h1>Bienvenido a IchtySys</h1>
@@ -195,17 +443,21 @@
         
 <!-- === MODAL DE ACCESO === -->
 <div id="modalAcceso" class="modal-acceso" role="dialog" aria-modal="true">
-    <div class="modal-acceso-dialogo">
+    <div class="modal-acceso-dialogo holograma-titulo">
         <button class="modal-acceso-cerrar">&#10006;</button>
         <h2>Seleccione Estado, Puerto<br>y clave de acceso</h2>
         <div class="modal-acceso-form">
-            <div>
-                <label><input type="radio" name="estadoAcceso" value="Sucre" checked> Sucre</label>
-                <label style="margin-left: 18px;"><input type="radio" name="estadoAcceso" value="Nueva Esparta"> Nueva Esparta</label>
-               <label><input type="radio" name="estadoAcceso" value="C.B."> C.B.</label>
+            <div id="estadoSelector">
+                <label class="estado-label"><input type="radio" name="estadoAcceso" value="Sucre" checked> Sucre</label>
+                <label class="estado-label" style="margin-left: 18px;"><input type="radio" name="estadoAcceso" value="Nueva Esparta"> Nueva Esparta</label>
+               <label class="estado-label"><input type="radio" name="estadoAcceso" value="C.B."> C.B.</label>
             </div>
             <div id="modalAccesoPuertos" style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:5px 14px;"></div>
-            <input type="password" id="modalClavePuerto" autocomplete="off" placeholder="Contraseña" />
+            <div class="password-wrapper">
+                <input type="password" id="modalClavePuerto" autocomplete="off" placeholder="Contraseña" />
+                <button type="button" class="toggle-password" id="togglePassword" title="Mostrar contraseña">&#128065;</button>
+            </div>
+            <div class="error-msg" id="errorClave"></div>
             <button id="modalBtnAcceso" class="modal-acceso-btn" type="button">Entrar</button>
         </div>
     </div>
@@ -342,8 +594,10 @@
 </div>
 
     <img src="./sardina2.png" alt="" class="sardina2" />
-    <fieldset>
+    <fieldset style="position: relative;">
         <legend><b>Porcentaje del Muestreo</b></legend>
+        <!-- Botón deshacer integrado -->
+        <button type="button" id="btnDeshacer" class="btn-deshacer" title="Deshacer última talla">&#8617;</button>
         <div>
             <span class="range-name">
                 <button class="boton-porcentaje" id="btnRangoMenor" type="button"><b>(<17)</b></button>
@@ -718,7 +972,6 @@ const estadosPuertos = {
 };
 const claveGeneral = "20124815";
 const clavesPuerto = { "El Morro": "Sardina321.", "Araya": "MsA2026!", "Cumaná": "MsC2026!", "Guaca": "MsG2026!", "Guayacán": "MsY2026!", "La Esmeralda": "MsE2026!", "Bella Vista": "MsB2026!", "Guayacán-Manzanillo": "MsM2026!", "Isla de Coche": "MsI2026!", "La Galera": "MsL2026!", "Manzanillo": "MsZ2026!", "Pampatar": "MsP2026!", "Valdez": "MsV2026!", "Centro de Balance ⚖️": "Jefa1." };
-//Object.values(estadosPuertos).flat().forEach(p => { if (!clavesPuerto[p]) clavesPuerto[p]=p; });
 
 let puertoSeleccionado = "";
 let puertoAutenticado = false;
@@ -729,6 +982,9 @@ const modalBtnAcceso = document.getElementById("modalBtnAcceso");
 const inputClave = document.getElementById("modalClavePuerto");
 const datalist = document.getElementById('listaDuenoEmbarcacion');
 const inputResp = document.getElementById('responsableMuestreo');
+
+// ==== HISTORIAL PARA DESHACER ====
+let historialTallas = [];
 
 // ==== MANEJO DE PUERTO Y ACCESO ====
 function actualizarCamposPorPuerto(nuevoPuerto) {
@@ -743,37 +999,72 @@ function actualizarCamposPorPuerto(nuevoPuerto) {
     document.getElementById('duenoEmbarcacion').value = '';
     document.getElementById('responsableMuestreo').value = '';
 }
+
 function renderPuertosAcceso(estado, preselect=null) {
     modalPuertosBox.innerHTML = "";
-    estadosPuertos[estado].forEach(nombre => {
+    const puertos = estadosPuertos[estado] || [];
+    puertos.forEach(nombre => {
         const id = "mp_" + nombre.replace(/\W/g, "_");
-        modalPuertosBox.innerHTML += `<label><input type="radio" name="puertoAcceso" value="${nombre}" id="${id}"> ${nombre}</label>`;
+        const isChecked = preselect === nombre ? 'checked' : '';
+        const label = document.createElement('label');
+        label.className = 'puerto-label';
+        label.innerHTML = `<input type="radio" name="puertoAcceso" value="${nombre}" id="${id}" ${isChecked}> ${nombre}`;
+        label.addEventListener('click', function(e) {
+            // Asegurar selección inmediata
+            const radio = this.querySelector('input[type="radio"]');
+            if (radio) {
+                radio.checked = true;
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+        modalPuertosBox.appendChild(label);
     });
-    let primerRadio = modalPuertosBox.querySelector("input[type=radio]");
-    if(preselect && modalPuertosBox.querySelector('input[value="'+preselect+'"]')) {
-        primerRadio = modalPuertosBox.querySelector('input[value="'+preselect+'"]');
+    
+    // Si no hay preselección, seleccionar el primero
+    if (!preselect && puertos.length > 0) {
+        const primerRadio = modalPuertosBox.querySelector('input[type="radio"]');
+        if (primerRadio) primerRadio.checked = true;
     }
-    if(primerRadio) primerRadio.checked = true;
 }
+
 function mostrarModalAcceso(cambioPuerto=false) {
     modoCambioPuerto = !!cambioPuerto;
     let preselectPuerto = "";
     let preselectEstado = "Sucre";
+    
     if(modoCambioPuerto && document.getElementById("puerto")) {
         preselectPuerto = document.getElementById("puerto").value.trim();
         for (let estado in estadosPuertos) {
             if (estadosPuertos[estado].includes(preselectPuerto)) preselectEstado = estado;
         }
-        document.querySelectorAll('input[name="estadoAcceso"]').forEach(rb=>{rb.checked = rb.value===preselectEstado;});
     }
+    
+    // Actualizar radios de estado con manejo directo
+    document.querySelectorAll('input[name="estadoAcceso"]').forEach(rb => {
+        rb.checked = rb.value === preselectEstado;
+    });
+    
     renderPuertosAcceso(preselectEstado, preselectPuerto);
     inputClave.value = "";
+    document.getElementById('errorClave').classList.remove('visible');
     modal.style.display = "flex";
     setTimeout(()=>inputClave.focus(), 130);
 }
-document.querySelectorAll('input[name="estadoAcceso"]').forEach(rb=>{
-    rb.addEventListener('change',function(){ renderPuertosAcceso(this.value); });
+
+// Manejo directo de cambio de estado con click
+document.querySelectorAll('input[name="estadoAcceso"]').forEach(rb => {
+    rb.addEventListener('click', function(e) {
+        // Desmarcar todos primero
+        document.querySelectorAll('input[name="estadoAcceso"]').forEach(r => r.checked = false);
+        // Marcar el clickeado
+        this.checked = true;
+        // Renderizar puertos
+        renderPuertosAcceso(this.value);
+        e.stopPropagation();
+    });
 });
+
 document.querySelector(".modal-acceso-cerrar").onclick = function (e) {
     if (!puertoAutenticado) {
         e.preventDefault();
@@ -782,9 +1073,21 @@ document.querySelector(".modal-acceso-cerrar").onclick = function (e) {
         modal.style.display = "none";
     }
 };
+
+// Toggle visibilidad de contraseña
+document.getElementById('togglePassword').onclick = function() {
+    const tipo = inputClave.getAttribute('type') === 'password' ? 'text' : 'password';
+    inputClave.setAttribute('type', tipo);
+    this.innerHTML = tipo === 'password' ? '&#128065;' : '&#128064;';
+    this.title = tipo === 'password' ? 'Mostrar contraseña' : 'Ocultar contraseña';
+};
+
 modalBtnAcceso.onclick = function () {
     const selectedPuerto = modalPuertosBox.querySelector('input[name="puertoAcceso"]:checked');
-    if (!selectedPuerto) { alert("Seleccione un puerto."); return; }
+    if (!selectedPuerto) { 
+        mostrarError("Seleccione un puerto."); 
+        return; 
+    }
     const pass = inputClave.value.trim();
     const nuevoPuerto = selectedPuerto.value;
     const claveCorrecta = pass === claveGeneral || pass === clavesPuerto[nuevoPuerto];
@@ -801,12 +1104,21 @@ modalBtnAcceso.onclick = function () {
         modoCambioPuerto = false;
         actualizarCamposPorPuerto(nuevoPuerto);
         restaurarFechaHoraAuto();
+        document.getElementById('errorClave').classList.remove('visible');
     } else {
-        alert("Contraseña incorrecta para el puerto '" + nuevoPuerto + "'.\nRecuerde usar mayúsculas, tildes y espacios exactos.");
+        mostrarError("Contraseña incorrecta");
         inputClave.value = "";
         inputClave.focus();
     }
 };
+
+function mostrarError(mensaje) {
+    const errorDiv = document.getElementById('errorClave');
+    errorDiv.textContent = mensaje;
+    errorDiv.classList.add('visible');
+    setTimeout(() => errorDiv.classList.remove('visible'), 3000);
+}
+
 window.addEventListener("DOMContentLoaded", function(){
     mostrarModalAcceso(false);
     actualizarCamposPorPuerto("El Morro");
@@ -831,7 +1143,7 @@ inputPuerto.addEventListener('click', function() {
 // ======== FECHA Y HORA SUPERPUESTA Y EDICIÓN OCULTA ========
 let fechaHoraClickCount = 0;
 let fechaEditable = false;
-// Evita sobreescribir la fecha si está en modo input
+
 function actualizarFechaHoraSardina() {
     if (fechaEditable) return;
     const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
@@ -933,6 +1245,7 @@ document.getElementById('puerto').addEventListener('input', restaurarFechaHoraAu
 const modalResp = document.getElementById('modalResponsables');
 const checkGrid = document.getElementById('checkGridResp');
 const btnRespOK = document.getElementById('btnRespOK');
+
 function openModalResp() {
     checkGrid.innerHTML = '';
     const current = inputResp.value.split(',').map(x=>x.trim()).filter(x=>x.length>0);
@@ -946,7 +1259,7 @@ function openModalResp() {
             let cks = checkGrid.querySelectorAll('input:checked');
             if(cks.length>3){
                 chk.checked=false;
-                alert('Máximo 3 responsables.');
+                mostrarNotificacion('Máximo 3 responsables permitidos');
             }
         };
         label.appendChild(chk);
@@ -955,10 +1268,43 @@ function openModalResp() {
     });
     modalResp.style.display='flex';
 }
+
+// Notificación temporal en lugar de alert
+function mostrarNotificacion(mensaje) {
+    const notifAnterior = document.getElementById('notificacion-temporal');
+    if (notifAnterior) notifAnterior.remove();
+    
+    const notif = document.createElement('div');
+    notif.id = 'notificacion-temporal';
+    notif.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.85);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        z-index: 30001;
+        animation: fadeInUp 0.3s ease;
+        text-align: center;
+    `;
+    notif.textContent = mensaje;
+    document.body.appendChild(notif);
+    
+    setTimeout(() => {
+        notif.style.opacity = '0';
+        notif.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => notif.remove(), 300);
+    }, 2000);
+}
+
 btnRespOK.onclick = function() {
     const seleccionados = Array.from(checkGrid.querySelectorAll('input:checked')).map(x=>x.value);
     if(seleccionados.length==0){
-        alert("Selecciona al menos uno."); return;
+        mostrarNotificacion("Selecciona al menos un responsable"); 
+        return;
     }
     inputResp.value = seleccionados.join(', ');
     modalResp.style.display='none';
@@ -971,13 +1317,12 @@ window.addEventListener('mousedown', function(e){
     }
 });
 
-// MINI POPUP OBSERVACIONES RÁPIDAS (¡¡BLOQUE ACTUALIZADO!!)
+// MINI POPUP OBSERVACIONES RÁPIDAS
 const observa = document.getElementById('observaciones');
 const popupObs = document.getElementById('popupObserva');
 const aceptarObs = document.getElementById('aceptarObs');
 const limpiarObservacionPopup = document.getElementById('limpiarObservacionPopup');
-limpiarObservacionPopup.onclick = function() { document.getElementById('observaciones').value = '';
-};
+limpiarObservacionPopup.onclick = function() { document.getElementById('observaciones').value = ''; };
 let obsUltimoFueAceptar = false;
 observa.addEventListener('focus', mostrarMiniObs);
 observa.addEventListener('click', mostrarMiniObs);
@@ -1034,7 +1379,6 @@ document.addEventListener('mousedown', function(e){
 });
 
 // ======================= TALLAS, CONTADORES Y RANGOS =========================
-// (TODO EL RESTO DE TU CÓDIGO SIN CAMBIOS... desde aquí sigue igual)
 
 var buttons = document.querySelectorAll('button.btn');
 var counters = document.querySelectorAll('.counter');
@@ -1052,6 +1396,36 @@ const rango17 = ["17","17.5"];
 const rango18 = ["18","18.5"];
 const rango19 = ["19","19.5","20","20.5","21","21.5","22","22.5","23"];
 var counts = { "12-16.5": 0, "17-23": 0 };
+
+// Botón deshacer integrado en fieldset de porcentaje
+const btnDeshacer = document.getElementById('btnDeshacer');
+
+function actualizarVisibilidadDeshacer() {
+    if (historialTallas.length > 0) {
+        btnDeshacer.classList.add('visible');
+    } else {
+        btnDeshacer.classList.remove('visible');
+    }
+}
+
+btnDeshacer.onclick = function() {
+    if (historialTallas.length === 0) return;
+    const ultimaTalla = historialTallas.pop();
+    if (sizeCounts[ultimaTalla] && sizeCounts[ultimaTalla] > 0) {
+        sizeCounts[ultimaTalla]--;
+        const btn = document.querySelector('button.btn[data-size="' + ultimaTalla + '"]');
+        if (btn) {
+            const counter = btn.querySelector('.counter');
+            if (counter) counter.textContent = sizeCounts[ultimaTalla];
+        }
+        totalElm.textContent = parseInt(totalElm.textContent, 10) - 1;
+        actualizarContadoresRangos();
+        actualizarContadoresBotonesRango();
+        calculatePercentages();
+    }
+    actualizarVisibilidadDeshacer();
+};
+
 function actualizarContadoresRangos() {
     counts["12-16.5"] = 0; counts["17-23"] = 0;
     for(var size in sizeCounts){
@@ -1085,6 +1459,8 @@ btnClear.onclick = function() {
     document.getElementById('obsLance').value = '';
     document.getElementById('obsCajas').value = '';
     sizeCounts = {};
+    historialTallas = [];
+    actualizarVisibilidadDeshacer();
     counters.forEach(function(counter){ counter.textContent = 0; });
     totalElm.textContent = 0;
     counts["12-16.5"]=0; counts["17-23"]=0;
@@ -1099,9 +1475,8 @@ btnClear.onclick = function() {
     document.getElementById('percentageRange2').textContent='';
     calculatePercentages();
 };
-// ========== btnLimpiar: limpia SOLO campos del formulario, NO el puerto ==========
+
 btnLimpiar.onclick = function() {
-    // NO limpiar: puerto, fecha-hora (se mantienen)
     document.getElementById('duenoEmbarcacion').value = '';
     document.getElementById('responsableMuestreo').value = '';
     document.getElementById('observaciones').value = '';
@@ -1139,28 +1514,28 @@ document.getElementById('btnRangoMenor').onclick = document.getElementById('btnR
     document.getElementById('modalSeleccionRango').style.display = 'flex';
 };
 const TEMAS = {
-    16: { // Rango 16: Naranja intenso (alarmante)
+    16: {
         header: 'radial-gradient(ellipse at center, #fff3e6 0%, #ff9933 40%, #ff6600 65%, #cc4400 100%)',
         btn: '#ff9933',
         btnHover: '#ff6600',
         boton: 'radial-gradient(ellipse at center, #fff3e6 0%, #ff9933 65%, #ff6600 100%)',
         blackbotton: '#cc4400'
     },
-    17: { // Rango 17: Rojo
+    17: {
         header: 'radial-gradient(ellipse at center, #ffe6e6 0%, #ff7f7f 40%, #ff0000 65%, red 100%)',
         btn: '#ff7f7f',
         btnHover: 'red',
         boton: 'radial-gradient(ellipse at center, #ffe6e6 0%, #ff7f7f 65%, red 100%)',
         blackbotton: '#8b0000'
     },
-    18: { // Rango 18: Azul
+    18: {
         header: 'radial-gradient(ellipse at center, #ebf8ff 0%, #64a2e2 40%, #0066cc 65%, blue 100%)',
         btn: '#70b8ff',
         btnHover: 'blue',
         boton: 'radial-gradient(ellipse at center, #ebf8ff 0%, #64a2e2 40%, blue 90%, blue 100%)',
         blackbotton: '#0051ad'
     },
-    19: { // Rango 19: Verde
+    19: {
         header: 'radial-gradient(ellipse at center, #a8ffb1 0%, #38b871 12%, #216144 70%, #153c27 100%)',
         btn: '#6ed76e',
         btnHover: '#217821',
@@ -1169,25 +1544,11 @@ const TEMAS = {
     }
 };
 
-function oscurecerColor(color) {
-    let rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color);
-    rgb = rgb ? {
-        r: parseInt(rgb[1], 16),
-        g: parseInt(rgb[2], 16),
-        b: parseInt(rgb[3], 16)
-    } : null;
-    if (!rgb) return color;
-    rgb.r = Math.max(0, rgb.r - 0.1 * rgb.r);
-    rgb.g = Math.max(0, rgb.g - 0.1 * rgb.g);
-    rgb.b = Math.max(0, rgb.b - 0.1 * rgb.b);
-    return '#' + ((1 << 24) + (rgb.r << 16) + (rgb.g << 8) + rgb.b).toString(16).slice(1);
-}
-
 function aplicarTema(tema) {
     document.querySelector('header').style.background = tema.header;
     document.querySelectorAll('.btn').forEach(btn => {
         btn.style.backgroundColor = tema.btn;
-        btn.style.boxShadow = 'inset 2px 2px 4px rgba(0,0,0,0.3)'; // Sombra interna
+        btn.style.boxShadow = 'inset 2px 2px 4px rgba(0,0,0,0.3)';
         btn.addEventListener('mouseover', ()=>{btn.style.backgroundColor = tema.btnHover;});
         btn.addEventListener('mouseout', ()=>{btn.style.backgroundColor = tema.btn;});
     });
@@ -1206,7 +1567,6 @@ function cambiarRangoPorcentaje(nuevoCorte) {
     aplicarTema(TEMAS[corteActual]);
 }
 
-// Llamada inicial para aplicar el tema por defecto
 aplicarTema(TEMAS[corteActual]);
 
 function calculatePercentages(){
@@ -1229,6 +1589,8 @@ buttons.forEach(function(button){
     button.onclick = function(){
         var size = button.dataset.size;
         sizeCounts[size] = (sizeCounts[size] || 0) + 1;
+        historialTallas.push(size);
+        actualizarVisibilidadDeshacer();
         button.querySelector('.counter').textContent = sizeCounts[size];
         totalElm.textContent = parseInt(totalElm.textContent, 10) + 1;
         actualizarContadoresRangos();
@@ -1255,9 +1617,6 @@ function actualizarBarraPorcentaje() {
     `;
 }
 
-
-
-
 // Mostrar modal al hacer click en el copyright
 document.addEventListener('DOMContentLoaded', function() {
   var trigger = document.getElementById('copyright-trigger');
@@ -1280,7 +1639,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
-
 
 </script>
 
@@ -1321,7 +1679,6 @@ document.addEventListener('DOMContentLoaded', function() {
    Chart.register(ChartDataLabels);
    
     document.addEventListener("DOMContentLoaded", function() {
-  // Abrir y cerrar modal
   document.getElementById('btn-analisis-graficas').onclick = function() {
     mostrarAnalisisModal();
   };
@@ -1341,15 +1698,12 @@ function mostrarAnalisisModal() {
   document.getElementById('modal-analisis').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 
-  // ----- DATOS DEL FORMULARIO ACTUAL -----
-  // Adapta estos a tus campos actuales si cambian nombres de ids
   var puerto = document.getElementById('puerto')?.value || '';
   var fecha = document.getElementById('fecha-sardina')?.textContent || '';
   var dueno = document.getElementById('duenoEmbarcacion')?.value || '';
   var responsables = document.getElementById('responsableMuestreo')?.value || '';
   var total = Number(document.getElementById('totalClick')?.textContent) || 0;
 
-  // Asigna las tallas y totales
   var tallas = [
     { nombre: "≤15cm", total: Number(document.getElementById('totalRango12-12.5-13-13.5-14-14.5-15-15.5')?.textContent) || 0 },
     { nombre: "16cm",  total: Number(document.getElementById('totalRango16-16.5')?.textContent) || 0 },
@@ -1359,7 +1713,6 @@ function mostrarAnalisisModal() {
   ];
   var sum = tallas.reduce((a, b) => a + b.total, 0);
 
-  // ----- RESUMEN ARRIBA -----
   var observaciones = document.getElementById('observaciones')?.value || '';
 document.getElementById('analisis-formulario').innerHTML =
   `<b>Puerto:</b> ${puerto}
@@ -1372,7 +1725,6 @@ document.getElementById('analisis-formulario').innerHTML =
 <div id="barra-porcentaje-resumen" style="line-height: 0.7;"></div>
 `;
    
-   // Calcular los totales y porcentajes para la barra según corteActual
 const rangos = RANGOS_DISPONIBLES[corteActual];
 let menor = 0, mayor = 0;
 for(let size in sizeCounts){
@@ -1380,14 +1732,9 @@ for(let size in sizeCounts){
     if(rangos.mayor.includes(size)) mayor += sizeCounts[size];
 }
 
-// Usa la variable 'total' que ya tengas declarada anteriormente dentro de la función
-// Si no la tienes declarada o quieres asegurar, declara con let solo una vez y reutilízala después
-// let total = Number(document.getElementById('totalClick')?.textContent) || 0;
-
 const p1 = total > 0 ? (menor / total) * 100 : 0;
 const p2 = total > 0 ? (mayor / total) * 100 : 0;
 
-// Generar el HTML de la barra simple con los porcentajes
 const barraHtml = `
   <div style="width:100%;height:15px;background:#eaeaea;border-radius:8px;overflow:hidden;display:flex;">
     <div style="background:#e03;width:${p1}%;height:100%;"></div>
@@ -1399,12 +1746,8 @@ const barraHtml = `
   </div>
 `;
 
-// Insertar el HTML generado en el div de la barra dentro del modal
 document.getElementById('barra-porcentaje-resumen').innerHTML = barraHtml;
 
-
-   
-     // 1. DESTRUYE GRAFICOS SI EXISTEN
 if (window.graficaTallaTipo) {
   window.graficaTallaTipo.destroy();
   window.graficaTallaTipo = null;
@@ -1427,8 +1770,6 @@ document.getElementById('cerrar-analisis').onclick = function() {
   }
 };
 
-
-// ----- GRAFICA CIRCULAR -----
 window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla').getContext('2d'), {
   type: 'pie',
   data: {
@@ -1449,7 +1790,7 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
             return data.labels.map((label, i) => {
               const value = data.datasets[0].data[i];
               return {
-                text: `${label} (${value})`,  // Solo número entre paréntesis sin palabra extra
+                text: `${label} (${value})`,
                 fillStyle: data.datasets[0].backgroundColor[i],
                 strokeStyle: data.datasets[0].backgroundColor[i],
                 index: i
@@ -1466,7 +1807,7 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
           const data = context.chart.data.datasets[0].data;
           const sum = data.reduce((a, b) => a + b, 0);
           const porcentaje = sum ? Math.round((value * 100) / sum) : 0;
-          return `${porcentaje}%`;  // Solo porcentaje en la gráfica
+          return `${porcentaje}%`;
         }
       },
       tooltip: {
@@ -1484,8 +1825,6 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
   plugins: [ChartDataLabels]
 });
 
-
-  // ----- GRAFICA DE BARRAS -----
   window.graficaTallaBarras = new Chart(document.getElementById('grafica-barras-talla').getContext('2d'), {
   type: 'bar',
   data: {
@@ -1509,7 +1848,7 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
         anchor: 'center',
         align: 'center',
         formatter: function(value, context) {
-          if (!value) return ''; // <-- Oculta 0%
+          if (!value) return '';
           const data = context.chart.data.datasets[0].data;
           const sum = data.reduce((a, b) => a + b, 0);
           return sum ? Math.round((value * 100) / sum) + '%' : '';
@@ -1533,10 +1872,6 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
   plugins: [ChartDataLabels]
 });
 
-
-
-
-  // ----- COMENTARIO ANÁLISIS AUTOMÁTICO -----
   let rangoMayor = tallas.reduce((a,b)=>b.total>a.total?b:a, {total:0});
   let textoResumen = '';
   if(sum === 0){
@@ -1576,64 +1911,55 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
     const inputDueno = document.getElementById('duenoEmbarcacion');
     const datalistOriginal = document.getElementById('listaDuenoEmbarcacion');
     
-    // Crear datalist alternativo para búsquedas normalizadas
-    let datalistNormalizado = document.createElement('datalist');
-    datalistNormalizado.id = 'listaDuenoEmbarcacionNormalizado';
-    document.body.appendChild(datalistNormalizado);
+    let todasLasOpciones = [];
     
-    // Mapeo de texto normalizado a texto original
-    let mapaNormalizado = {};
-    
-    function actualizarMapaBusqueda() {
-        mapaNormalizado = {};
-        datalistNormalizado.innerHTML = '';
+    function actualizarOpciones() {
+        todasLasOpciones = [];
         const opciones = datalistOriginal.querySelectorAll('option');
         opciones.forEach(function(opt) {
-            const original = opt.value;
-            const normalizado = normalizarTexto(original);
-            mapaNormalizado[normalizado] = original;
-            
-            // Crear opción normalizada para el datalist alternativo
-            const optNorm = document.createElement('option');
-            optNorm.value = original; // Mostramos el original pero buscamos por normalizado
-            datalistNormalizado.appendChild(optNorm);
+            todasLasOpciones.push({
+                original: opt.value,
+                normalizado: normalizarTexto(opt.value)
+            });
         });
     }
     
-    // Observar cambios en el datalist original
-    const observer = new MutationObserver(actualizarMapaBusqueda);
+    const observer = new MutationObserver(actualizarOpciones);
     observer.observe(datalistOriginal, { childList: true });
     
-    // Actualizar inicialmente
-    actualizarMapaBusqueda();
+    actualizarOpciones();
     
-    // Interceptar la entrada del usuario
-    inputDueno.addEventListener('input', function(e) {
-        const valorInput = normalizarTexto(this.value);
-        if (!valorInput) return;
-        
-        // Buscar coincidencias parciales en el mapa normalizado
-        const coincidencias = [];
-        for (let normalizado in mapaNormalizado) {
-            if (normalizado.includes(valorInput)) {
-                coincidencias.push(mapaNormalizado[normalizado]);
-            }
+    let datalistTemp = null;
+    
+    function crearDatalistTemp() {
+        if (!datalistTemp) {
+            datalistTemp = document.createElement('datalist');
+            datalistTemp.id = 'listaDuenoEmbarcacionTemp';
+            document.body.appendChild(datalistTemp);
         }
+        return datalistTemp;
+    }
+    
+    function filtrarOpciones(valor) {
+        const valorNormalizado = normalizarTexto(valor);
+        if (!valorNormalizado) return [];
         
-        // Si hay coincidencias, actualizar el datalist visible temporalmente
-        if (coincidencias.length > 0 && coincidencias.length < datalistOriginal.querySelectorAll('option').length) {
-            // Crear datalist temporal con las coincidencias
-            let datalistTemp = document.getElementById('listaDuenoEmbarcacionTemp');
-            if (!datalistTemp) {
-                datalistTemp = document.createElement('datalist');
-                datalistTemp.id = 'listaDuenoEmbarcacionTemp';
-                document.body.appendChild(datalistTemp);
-            }
-            datalistTemp.innerHTML = '';
+        return todasLasOpciones.filter(function(opcion) {
+            return opcion.normalizado.includes(valorNormalizado);
+        });
+    }
+    
+    inputDueno.addEventListener('input', function(e) {
+        const valorInput = this.value;
+        const coincidencias = filtrarOpciones(valorInput);
+        
+        if (coincidencias.length > 0 && coincidencias.length < todasLasOpciones.length) {
+            const temp = crearDatalistTemp();
+            temp.innerHTML = '';
             coincidencias.forEach(function(coinc) {
                 const opt = document.createElement('option');
-                opt.value = coinc;
-                datalistTemp.appendChild(opt);
+                opt.value = coinc.original;
+                temp.appendChild(opt);
             });
             inputDueno.setAttribute('list', 'listaDuenoEmbarcacionTemp');
         } else {
@@ -1641,12 +1967,10 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
         }
     });
     
-    // Al seleccionar una opción, restaurar el datalist original
     inputDueno.addEventListener('change', function() {
         inputDueno.setAttribute('list', 'listaDuenoEmbarcacion');
     });
     
-    // También al perder el foco
     inputDueno.addEventListener('blur', function() {
         setTimeout(function() {
             inputDueno.setAttribute('list', 'listaDuenoEmbarcacion');
