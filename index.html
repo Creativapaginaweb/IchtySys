@@ -3067,5 +3067,80 @@ window.graficaTallaTipo = new Chart(document.getElementById('grafica-tipos-talla
 })();
 </script>
 
+<script>
+// === CONTROL DE ACTUALIZACIÓN DEL SERVICE WORKER ===
+(function() {
+  if (!('serviceWorker' in navigator)) return;
+
+  let refreshing = false;
+
+  // Escucha mensajes del SW
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SW_UPDATED') {
+      console.log('[App] Nueva versión disponible:', event.data.version);
+      // Opción 1: Recargar automáticamente
+      if (!refreshing) {
+        refreshing = true;
+        window.location.reload();
+      }
+    }
+  });
+
+  // Detecta cuando un nuevo SW toma control
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    console.log('[App] Nuevo controller detectado');
+    if (!refreshing) {
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+
+  // Registro del SW con detección de actualizaciones
+  navigator.serviceWorker.register('service-worker.js')
+    .then(registration => {
+      console.log('[App] SW registrado:', registration.scope);
+
+      // Detecta nuevo SW esperando
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        console.log('[App] Nueva versión del SW encontrada');
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // Hay una nueva versión esperando
+            console.log('[App] Nueva versión lista para activar');
+            
+            // Opción 2: Mostrar notificación al usuario (descomenta si prefieres)
+            /*
+            if (confirm('Hay una actualización disponible. ¿Recargar ahora?')) {
+              newWorker.postMessage('SKIP_WAITING');
+            }
+            */
+            
+            // Opción 3: Forzar activación inmediata (más agresivo)
+            newWorker.postMessage('SKIP_WAITING');
+          }
+        });
+      });
+
+      // Verifica actualizaciones periódicamente (cada 60 min)
+      setInterval(() => {
+        registration.update();
+        console.log('[App] Verificando actualizaciones...');
+      }, 60 * 60 * 1000);
+
+      // También verifica al volver a la página
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          registration.update();
+        }
+      });
+    })
+    .catch(error => {
+      console.log('[App] Error al registrar SW:', error);
+    });
+})();
+</script>
+
 </body>
 </html>
